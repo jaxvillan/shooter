@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white; /* Add white text for better visibility on a black background */
+        }
+
+        #target {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+    </style>
+    <title>Shooting Game</title>
+</head>
+<body>
+    <h1>Shooting Game</h1>
+    <div id="target" onclick="hitTarget()"></div>
+    <p id="score">Score: <span id="scoreCount">0</span></p>
+
+    <script>
+        let score = 0;
+        let hitsToShrink = 5;
+
+        function hitTarget() {
+            score++;
+            document.getElementById('scoreCount').textContent = score;
+
+            const target = document.getElementById('target');
+            const randomX = Math.floor(Math.random() * (window.innerWidth - target.clientWidth));
+            const randomY = Math.floor(Math.random() * (window.innerHeight - target.clientHeight));
+
+            target.style.left = `${randomX}px`;
+            target.style.top = `${randomY}px`;
+
+            if (score % hitsToShrink === 0) {
+                const currentSize = parseInt(window.getComputedStyle(target).width);
+                const newSize = currentSize * 0.9;
+                target.style.width = `${newSize}px`;
+                target.style.height = `${newSize}px`;
+            }
+        }
+    </script>
+</body>
+</html>
